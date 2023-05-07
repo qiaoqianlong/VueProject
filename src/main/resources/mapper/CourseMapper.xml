@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.CourseMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.Course">
+        select course.*, major.name as major from course
+        left join major
+        on course.major_id = major.id
+        <where>
+            <if test="name != null and name != ''">
+                and course.name like concat('%', #{name},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and course.type like concat('%', #{type},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

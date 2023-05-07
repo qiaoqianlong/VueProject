@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.StudentGradRequireScoreMapper">
+
+    <select id="ShowStuGradRequireScore" resultType="com.qingge.springboot.entity.StudentGradRequireScore">
+        select student_grad_require_score.score as Score,
+               point.name as pointName
+        from student_grad_require_score
+                 left join point
+                           on student_grad_require_score.point_id = point.id
+        where student_grad_require_score.student_id = #{studentId}
+    </select>
+    <select id="FindClazzOnePointInfo" resultType="com.qingge.springboot.entity.StudentGradRequireScore">
+        select student_grad_require_score.student_id as studentId,
+               student_grad_require_score.score as score
+        from student_grad_require_score
+        where student_grad_require_score.clazz_id = #{clazzId} and student_grad_require_score.point_id = #{pointId}
+    </select>
+</mapper>

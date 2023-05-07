@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.UserMapper">
+
+<!--    <resultMap id="pageUser" type="com.qingge.springboot.entity.User">-->
+<!--        <result column="id" property="id" />-->
+<!--        <result column="username" property="username" />-->
+<!--        <result column="nickname" property="nickname" />-->
+<!--        <result column="email" property="email" />-->
+<!--        <result column="phone" property="phone" />-->
+<!--        <result column="address" property="address" />-->
+<!--        <result column="create_time" property="createTime" />-->
+<!--        <result column="avatar_url" property="avatarUrl" />-->
+<!--        <result column="role" property="role" />-->
+<!--&lt;!&ndash;        &lt;!&ndash;教师查询选课课程&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <collection property="courses" javaType="java.util.ArrayList" ofType="com.qingge.springboot.entity.Course">&ndash;&gt;-->
+<!--&lt;!&ndash;            <result column="teacherCourseName" property="name" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <result column="teacherScore" property="score" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </collection>&ndash;&gt;-->
+<!--&lt;!&ndash;        &lt;!&ndash;学生查询选课课程&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <collection property="stuCourses" javaType="java.util.ArrayList" ofType="com.qingge.springboot.entity.Course">&ndash;&gt;-->
+<!--&lt;!&ndash;            <result column="stuCourseName" property="name" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <result column="stuScore" property="score" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </collection>&ndash;&gt;-->
+<!--    </resultMap>-->
+
+    <!--这里查询需要把 关联表 放在前面-->
+<!--    <select id="findPage" resultMap="pageUser">-->
+<!--        select  sys_user.*,-->
+<!--                stu_course.name as stuCourseName,-->
+<!--                stu_course.score as stuScore,-->
+<!--                tea_course.name as teacherCourseName,-->
+<!--                tea_course.score as teacherScore-->
+<!--        from sys_user-->
+<!--        left join student_course-->
+<!--                on sys_user.id = student_course.student_id-->
+<!--        left join course stu_course-->
+<!--                on student_course.course_id = stu_course.id-->
+<!--        left join course tea_course-->
+<!--                on sys_user.id = tc.teacher_id-->
+<!--        <where>-->
+<!--            <if test="username != null and username != ''">-->
+<!--                and sys_user.username like concat('%', #{username} ,'%')-->
+<!--            </if>-->
+<!--            <if test="email != null and email != ''">-->
+<!--                and sys_user.email like concat('%', #{email} ,'%')-->
+<!--            </if>-->
+<!--            <if test="address != null and address != ''">-->
+<!--                and sys_user.address like concat('%', #{address} ,'%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+</mapper>

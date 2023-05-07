@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.UnitQuestionnaireCountMapper">
+
+    <select id="selectHumanQuality" resultType="java.lang.Integer">
+        select
+            count(title5) as humanQuality
+        from unit_questionnaire_count
+        where title5 = #{num}
+    </select>
+    <select id="selectProKnowledge" resultType="java.lang.Integer">
+        select
+            count(title6) as proKnowledge
+        from unit_questionnaire_count
+        where title6 = #{num}
+    </select>
+    <select id="selectEgCapability" resultType="java.lang.Integer">
+        select
+            count(title7) as egCapability
+        from unit_questionnaire_count
+        where title7 = #{num}
+    </select>
+    <select id="selectSocialAbility" resultType="java.lang.Integer">
+        select
+            count(title8) as socialAbility
+        from unit_questionnaire_count
+        where title8 = #{num}
+    </select>
+    <select id="selectLearnAbility" resultType="java.lang.Integer">
+        select
+            count(title9) as learnAbility
+        from unit_questionnaire_count
+        where title9 = #{num}
+    </select>
+    <select id="selectEcoAdaptability" resultType="java.lang.Integer">
+        select
+            count(title2) as ecoAdaptability
+        from unit_questionnaire_count
+        where title2 = #{num}
+    </select>
+    <select id="selectEtdAdaptability" resultType="java.lang.Integer">
+        select
+            count(title3) as etdAdaptability
+        from unit_questionnaire_count
+        where title3 = #{num}
+    </select>
+    <select id="selectIdAdaptability" resultType="java.lang.Integer">
+        select
+            count(title4) as idAdaptability
+        from unit_questionnaire_count
+        where title4 = #{num}
+    </select>
+    <select id="selectRecognition" resultType="java.lang.Integer">
+        select
+            count(title1) as recognition
+        from unit_questionnaire_count
+        where title1 = #{num}
+    </select>
+    <select id="selectA" resultType="java.lang.Double">
+        select (1-count(unit_questionnaire_count.title10_1)/(select count(id) from unit_questionnaire_count)) as A
+        from unit_questionnaire_count
+        where unit_questionnaire_count.title10_1 like 'true';
+    </select>
+    <select id="selectB" resultType="java.lang.Double">
+        select (1-count(unit_questionnaire_count.title10_2)/(select count(id) from unit_questionnaire_count)) as B
+        from unit_questionnaire_count
+        where unit_questionnaire_count.title10_2 like 'true';
+    </select>
+    <select id="selectC" resultType="java.lang.Double">
+        select (1-count(unit_questionnaire_count.title10_3)/(select count(id) from unit_questionnaire_count)) as C
+        from unit_questionnaire_count
+        where unit_questionnaire_count.title10_3 like 'true';
+    </select>
+    <select id="selectD" resultType="java.lang.Double">
+        select (1-count(unit_questionnaire_count.title10_4)/(select count(id) from unit_questionnaire_count)) as D
+        from unit_questionnaire_count
+        where unit_questionnaire_count.title10_4 like 'true';
+    </select>
+    <select id="selectE" resultType="java.lang.Double">
+        select (1-count(unit_questionnaire_count.title10_5)/(select count(id) from unit_questionnaire_count)) as E
+        from unit_questionnaire_count
+        where unit_questionnaire_count.title10_5 like 'true';
+    </select>
+    <select id="selectF" resultType="java.lang.Double">
+        select (1-count(unit_questionnaire_count.title10_6)/(select count(id) from unit_questionnaire_count)) as F
+        from unit_questionnaire_count
+        where unit_questionnaire_count.title10_6 like 'true';
+    </select>
+    <select id="loadTableData1" resultType="com.qingge.springboot.controller.dto.UnitFeedbackInfoDTO">
+        select enterprisename as enterpriseName,
+               title11 as feedbackInfo
+        from unit_questionnaire_count
+        where title11 !=''
+    </select>
+
+</mapper>

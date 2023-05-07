@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.QuestionnaireCountMapper">
+
+    <insert id="saveAll">
+
+    </insert>
+    <select id="SelfAssess" resultType="com.qingge.springboot.controller.dto.SelfAssessDTO">
+        select
+        count(title18_1) as baseTheory
+        from questionnaire_count
+        where title18_1 = #{num}
+    </select>
+    <select id="selectBaseTheory" resultType="java.lang.Integer">
+        select
+        count(title18_1) as baseTheory
+        from questionnaire_count
+        where title18_1 = #{num}
+    </select>
+    <select id="selectProKnowledge" resultType="java.lang.Integer">
+        select
+            count(title18_2) as proKnowledge
+        from questionnaire_count
+        where title18_2 = #{num}
+    </select>
+    <select id="selectSfDesignPower" resultType="java.lang.Integer">
+        select
+            count(title18_3) as sfDesignPower
+        from questionnaire_count
+        where title18_3 = #{num}
+    </select>
+    <select id="selectFLanguagePower" resultType="java.lang.Integer">
+        select
+            count(title18_4) as fLanguagePower
+        from questionnaire_count
+        where title18_4 = #{num}
+    </select>
+    <select id="selectSfExploitPower" resultType="java.lang.Integer">
+        select
+            count(title18_5) as sfExploitPower
+        from questionnaire_count
+        where title18_5 = #{num}
+    </select>
+    <select id="selectTeamwork" resultType="java.lang.Integer">
+        select
+            count(title18_6) as teamwork
+        from questionnaire_count
+        where title18_6 = #{num}
+    </select>
+    <select id="selectOrganizingAbility" resultType="java.lang.Integer">
+        select
+            count(title18_7) as organizingAbility
+        from questionnaire_count
+        where title18_7 = #{num}
+    </select>
+    <select id="selectStudyPower" resultType="java.lang.Integer">
+        select
+            count(title18_8) as studyPower
+        from questionnaire_count
+        where title18_8 = #{num}
+    </select>
+    <select id="selectInterPower" resultType="java.lang.Integer">
+        select
+            count(title18_9) as interPower
+        from questionnaire_count
+        where title18_9 = #{num}
+    </select>
+    <select id="selectCreativity" resultType="java.lang.Integer">
+        select
+            count(title18_10) as creativity
+        from questionnaire_count
+        where title18_10 = #{num}
+    </select>
+    <select id="selectGoal1" resultType="java.lang.Integer">
+        select
+            count(title10) as Goal1
+        from questionnaire_count
+        where title10 = #{num}
+    </select>
+    <select id="selectGoal2" resultType="java.lang.Integer">
+        select
+            count(title11) as Goal2
+        from questionnaire_count
+        where title11 = #{num}
+    </select>
+    <select id="selectGoal3" resultType="java.lang.Integer">
+        select
+            count(title13) as Goal3
+        from questionnaire_count
+        where title13 = #{num}
+    </select>
+    <select id="selectGoal4" resultType="java.lang.Integer">
+        select
+            count(title14) as Goal4
+        from questionnaire_count
+        where title14 = #{num}
+    </select>
+    <select id="selectGoal5" resultType="java.lang.Integer">
+        select
+            count(title15) as Goal5
+        from questionnaire_count
+        where title15 = #{num}
+    </select>
+    <select id="selectTotalGoal" resultType="java.lang.Integer">
+        select
+            count(title16) as totalGoal
+        from questionnaire_count
+        where title16 = #{num}
+    </select>
+
+
+    <select id="selectPerGoal1" resultType="java.lang.Double">
+        select (count(title10)/(select count(id) from questionnaire_count)) as perGoal1
+        from questionnaire_count
+        where title10 = #{num}
+    </select>
+    <select id="selectPerGoal2" resultType="java.lang.Double">
+        select (count(title11)/(select count(id) from questionnaire_count)) as perGoal2
+        from questionnaire_count
+        where title11 = #{num}
+    </select>
+    <select id="selectPerGoal3" resultType="java.lang.Double">
+        select (count(title13)/(select count(id) from questionnaire_count)) as perGoal3
+        from questionnaire_count
+        where title13 = #{num}
+    </select>
+    <select id="selectPerGoal4" resultType="java.lang.Double">
+        select (count(title14)/(select count(id) from questionnaire_count)) as perGoal4
+        from questionnaire_count
+        where title14 = #{num}
+    </select>
+    <select id="selectPerGoal5" resultType="java.lang.Double">
+        select (count(title15)/(select count(id) from questionnaire_count)) as perGoal5
+        from questionnaire_count
+        where title15 = #{num}
+    </select>
+    <select id="selectPertotalGoal" resultType="java.lang.Double">
+        select (count(title16)/(select count(id) from questionnaire_count)) as pertotalGoal
+        from questionnaire_count
+        where title16 = #{num}
+    </select>
+</mapper>

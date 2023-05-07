@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.ClazzCourseGoalScoreMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.ClazzCourseGoalScore">
+        select distinct
+        clazz_course_goal_score.clazz_id,
+        clazz_course_goal_score.course_id,
+        clazz.name as clazzName,
+        course.name as courseName,
+        clazz.grade as Grade
+        /*course_goal_weight.name as courseGoalWeightName*/
+
+        from clazz_course_goal_score
+        left join clazz
+        on clazz_course_goal_score.clazz_id = clazz.id
+        left join course
+        on clazz_course_goal_score.course_id = course.id
+        /*left join course_goal_weight
+        on student_course_goal_score.course_goal_id = course_goal_weight.id*/
+        <where>
+            <if test="name != null and name != ''">
+                and clazz.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findPagePlus" resultType="com.qingge.springboot.entity.ShowClazzInfo">
+        SELECT
+               s.average as courseGoalScore,
+                        c.`name` as courseGoalName,
+                        s.field_one_count as fieldOneCount,
+                        s.field_two_count as fieldTwoCount,
+                        s.field_three_count as fieldThreeCount,
+                        s.field_four_count as fieldFourCount,
+                        s.field_five_count as fieldFiveCount
+        from
+            clazz_course_goal_score s LEFT JOIN course_goal_weight c ON s.course_goal_id = c.id
+        WHERE s.clazz_id = #{clazzId} and s.course_id = #{courseId}
+    </select>
+
+
+</mapper>

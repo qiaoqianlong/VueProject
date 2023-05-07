@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.ScoreMapper">
+
+    <resultMap id="ScoreMap" type="com.qingge.springboot.entity.Score">
+        <id column="id" property="id"/>
+        <result column="student_id" property="studentId"/>
+<!--        <result column="course_weights_id" property="courseWeightsId"/>-->
+        <result column="score" property="score"/>
+        <result column="create_time" property="createTime"/>
+<!--        <association property="courseWeights"-->
+<!--                     select="com.qingge.springboot.mapper.CourseWeightsMapper.getCourseWeightsAndScore"-->
+<!--                     column="course_weights_id">-->
+<!--        </association>-->
+    </resultMap>
+
+    <select id="findPage" resultMap="ScoreMap">
+        select score.*,
+        student.name as studentName,
+        student.code as studentCode,
+        check_teacher_weight.name as checkTeacherName,
+        course.name as courseName
+        from score
+        left join student
+        on score.student_id = student.id
+        left join check_teacher_weight
+        on score.check_teacher_weight_id = check_teacher_weight.id
+        left join course
+        on score.course_id = course.id
+        <where>
+            <if test="name != null and name != ''">
+                and student.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+            <if test="teacherCheckName != null and teacherCheckName != ''">
+                and check_teacher_weight.name like concat('%', #{teacherCheckName},'%')
+            </if>
+            <if test=" teacherId != null and teacherId != ''">
+                and score.teacher_id = #{teacherId}
+            </if>
+            <if test=" courseId != null and courseId != ''">
+                and score.course_id = #{courseId}
+            </if>
+            <if test=" checkTeacherId != null and checkTeacherId != ''">
+                and score.check_teacher_weight_id = #{checkTeacherId}
+            </if>
+        </where>
+    </select>
+</mapper>

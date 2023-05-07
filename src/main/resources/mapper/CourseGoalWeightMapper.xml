@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.CourseGoalWeightMapper">
+
+    <select id="findCourseGoal" resultType="com.qingge.springboot.entity.CourseGoalWeight">
+        select course_goal_weight.`name` as name,
+        course_goal_weight.id as id
+        from course_goal_weight
+        where course_goal_weight.course_id = #{courseId}
+          and course_goal_weight.teacher_id = #{teacherId}
+    </select>
+</mapper>

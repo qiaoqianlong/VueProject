@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.PointCourseWeightMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.PointCourseWeight">
+        select point_course_weight.*, point.name as pointName,course.name as courseName from point_course_weight
+        left join point
+        on point_course_weight.point_id = point.id
+        left join course
+        on point_course_weight.course_id = course.id
+        <where>
+            <if test="pointId != null and pointId != ''">
+                and point_course_weight.point_id = #{pointId}
+            </if>
+        </where>
+    </select>
+</mapper>

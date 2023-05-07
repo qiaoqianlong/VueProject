@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.CourseWeightsMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.CourseWeights">
+        select  course_weights.*,
+        cgw.weight as weightCourseGoal,
+        cow.weight as weightCheckOutline,
+        ctw.weight as weightCheckTeacher,
+        cgw.name as nameCourseGoal,
+        cow.name as nameCheckOutline,
+        ctw.name as nameCheckTeacher,
+        suser.nickname as teacher,
+        course.name as course,
+        point.name as pointName
+        from course_weights
+        left join course_goal_weight cgw
+        on course_weights.course_goal_id = cgw.id
+        left join check_outline_weight cow
+        on course_weights.check_outline_id = cow.id
+        left join check_teacher_weight ctw
+        on course_weights.check_teacher_id = ctw.id
+        left join sys_user suser
+        on course_weights.teacher_id = suser.id
+        left join course
+        on course_weights.course_id = course.id
+        left join point
+        on course_weights.point_id = point.id
+        <where>
+            <if test="name != null and name != ''">
+                and course.name like concat('%', #{name},'%')
+            </if>
+            <if test=" teacherId != null and teacherId != ''">
+                and course_weights.teacher_id = #{teacherId}
+            </if>
+        </where>
+    </select>
+    <select id="findAllByTeacherIdAndCourseId" resultType="com.qingge.springboot.entity.CourseWeights">
+        select  course_weights.*,
+        cgw.weight as weightCourseGoal,
+        cow.weight as weightCheckOutline,
+        ctw.weight as weightCheckTeacher,
+        cgw.name as nameCourseGoal,
+        cow.name as nameCheckOutline,
+        ctw.name as nameCheckTeacher,
+        suser.nickname as teacher,
+        course.name as course,
+        point.name as pointName
+        from course_weights
+        left join course_goal_weight cgw
+        on course_weights.course_goal_id = cgw.id
+        left join check_outline_weight cow
+        on course_weights.check_outline_id = cow.id
+        left join check_teacher_weight ctw
+        on course_weights.check_teacher_id = ctw.id
+        left join sys_user suser
+        on course_weights.teacher_id = suser.id
+        left join course
+        on course_weights.course_id = course.id
+        left join point
+        on course_weights.point_id = point.id
+        <where>
+            <if test="teacherId != null">
+                and course_weights.teacher_id = #{teacherId}
+            </if>
+            <if test="courseId != null and courseId != ''">
+                and course_weights.course_id = #{courseId}
+            </if>
+        </where>
+    </select>
+
+<!--    <select id="getCourseWeightsAndScore" resultType="com.qingge.springboot.entity.CourseWeights">-->
+<!--        select * from course_weights-->
+<!--            where id = #{courseWeightsId}-->
+<!--    </select>-->
+</mapper>

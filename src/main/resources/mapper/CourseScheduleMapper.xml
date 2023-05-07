@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.CourseScheduleMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.CourseSchedule">
+        select course_schedule.*, course.name as course,
+        sys_user.nickname as teacher, clazz.name as clazz
+        from course_schedule
+        left join course
+        on course_schedule.course_id = course.id
+        left join sys_user
+        on course_schedule.teacher_id = sys_user.id
+        left join clazz
+        on course_schedule.clazz_id = clazz.id
+        <where>
+            <if test="courseId != null and courseId != ''">
+                and course_schedule.course_id = #{courseId}
+            </if>
+            <if test="teacherId != null and teacherId != ''">
+                and course_schedule.teacher_id  = #{teacherId}
+            </if>
+            <if test="clazzId != null and clazzId != ''">
+                and course_schedule.clazz_id = #{clazzId}
+            </if>
+            <if test="name != null and name != ''">
+                and course.name like concat('%', #{name},'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="findPageByTeacherId" resultType="com.qingge.springboot.entity.CourseSchedule">
+        select course_schedule.*, course.name as course,
+        sys_user.nickname as teacher, clazz.name as clazz
+        from course_schedule
+        left join course
+        on course_schedule.course_id = course.id
+        left join sys_user
+        on course_schedule.teacher_id = sys_user.id
+        left join clazz
+        on course_schedule.clazz_id = clazz.id
+        <where>
+            <if test="teacherId != null and teacherId != ''">
+                and course_schedule.teacher_id  = #{teacherId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findStudentCourseInfo" resultType="com.qingge.springboot.entity.StudentCourseGoalScore">
+        SELECT DISTINCT student.`name` as studentName,
+        student.`code` as studentCode,
+        student.id as studentId,
+        course.id as courseId,
+        course.`name` as courseName
+        FROM course_weights
+        LEFT JOIN course_schedule
+        ON course_weights.teacher_id = course_schedule.teacher_id and course_weights.course_id = course_schedule.course_id
+        LEFT JOIN student
+        ON student.clazz_id = course_schedule.clazz_id
+        LEFT JOIN course
+        ON course.id = course_schedule.course_id
+        <where>
+            and course_weights.teacher_id = 1
+            <if test="name != null and name != ''">
+                and student.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findClazzCourseInfo" resultType="com.qingge.springboot.entity.ClazzCourseGoalScore">
+        SELECT DISTINCT clazz.`name` as clazzName,
+        course.`name` as courseName,
+        course.id as courseId,
+        clazz.id as clazzId
+        FROM course_weights
+        LEFT JOIN course_schedule
+        ON course_weights.teacher_id = course_schedule.teacher_id and course_weights.course_id = course_schedule.course_id
+        LEFT JOIN course
+        ON course.id = course_schedule.course_id
+        left join clazz
+        on clazz.id = course_schedule.clazz_id
+        <where>
+            and course_weights.teacher_id = #{teacherId}
+            <if test="name != null and name != ''">
+                and clazz.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findMajorCourseInfo" resultType="com.qingge.springboot.entity.MajorCourseGoalScore">
+        select distinct course_weights.course_id as courseId,
+        course.`name` as courseName,
+        major.`name` as majorName,
+        major.id as majorId,
+        clazz.grade as grade
+        from course_weights
+        left join course
+        on course.id = course_weights.course_id
+        left join major
+        on course.major_id = major.id
+        left join clazz
+        on clazz.major_id = course.major_id
+        <where>
+            and course_weights.teacher_id = 1
+            <if test="name != null and name != ''">
+                and major.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findAllClazzCourseInfo" resultType="com.qingge.springboot.entity.ClazzCourseGoalScore">
+        SELECT DISTINCT clazz.`name` as clazzName,
+        course.`name` as courseName,
+        course.id as courseId,
+        clazz.id as clazzId
+        FROM course_weights
+        LEFT JOIN course_schedule
+        ON course_weights.teacher_id = course_schedule.teacher_id and course_weights.course_id = course_schedule.course_id
+        LEFT JOIN course
+        ON course.id = course_schedule.course_id
+        left join clazz
+        on clazz.id = course_schedule.clazz_id
+        <where>
+            <if test="name != null and name != ''">
+                and clazz.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

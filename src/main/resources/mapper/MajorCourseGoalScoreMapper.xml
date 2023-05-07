@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.MajorCourseGoalScoreMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.MajorCourseGoalScore">
+        select distinct
+        major_course_goal_score.major_id,
+        major_course_goal_score.course_id,
+        major.name as majorName,
+        course.name as courseName
+
+        from major_course_goal_score
+        left join major
+        on major_course_goal_score.major_id = major.id
+        left join course
+        on major_course_goal_score.course_id = course.id
+
+        <where>
+            <if test="name != null and name != ''">
+                and major.name like concat('%', #{name},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like concat('%', #{courseName},'%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findPagePlus" resultType="com.qingge.springboot.entity.ShowClazzInfo">
+        SELECT
+            m.average as courseGoalScore,
+            c.`name` as courseGoalName,
+            m.field_one_count as fieldOneCount,
+            m.field_two_count as fieldTwoCount,
+            m.field_three_count as fieldThreeCount,
+            m.field_four_count as fieldFourCount,
+            m.field_five_count as fieldFiveCount
+        from
+            major_course_goal_score m LEFT JOIN course_goal_weight c ON m.course_goal_id = c.id
+        WHERE m.major_id = #{majorId} and m.course_id = #{courseId}
+    </select>
+</mapper>

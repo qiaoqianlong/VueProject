@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.ClazzMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.entity.Clazz">
+        select clazz.*, major.name as major from clazz
+        left join major
+        on clazz.major_id = major.id
+        <where>
+            <if test="name != null and name != ''">
+                and clazz.name like concat('%', #{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="ShowClazzGradRequire" resultType="com.qingge.springboot.entity.Clazz">
+        select distinct clazz.`name` as name,
+                        major.`name` as majorName,
+                        major.id as majorId,
+                        clazz.id as id
+        from clazz
+                 left join major
+                           on clazz.major_id = major.id
+                 left join course_schedule
+                           on course_schedule.clazz_id = clazz.id
+        <where>
+               and course_schedule.teacher_id = 1
+            <if test="name != null and name != ''">
+                and clazz.name like concat('%', #{name},'%')
+            </if>
+            <if test="majorName != null and majorName != ''">
+                and major.name like concat('%', #{majorName},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
